@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hourly Daily Planner</title>
+    <title>Hera - Daily Planner</title>
     <style>
       /* Add your CSS styling here */
       body {
@@ -34,16 +34,24 @@
         margin: 20px;
         text-align: center;
       }
-      .date-picker input {
+      .date-picker input[type="date"] {
         font-size: 16px;
         padding: 5px;
+        width: 200px;
+      }
+      .date-picker button {
+        font-size: 16px;
+        padding: 5px 10px;
+        margin: 0 10px;
       }
     </style>
   </head>
   <body>
     <!-- Date Picker -->
     <div class="date-picker">
+      <button id="prevDate">Previous</button>
       <input type="date" id="datePicker" />
+      <button id="nextDate">Next</button>
     </div>
 
     <!-- Planner -->
