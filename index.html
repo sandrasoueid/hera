@@ -1,0 +1,54 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hourly Daily Planner</title>
+    <style>
+      /* Add your CSS styling here */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .planner {
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+      }
+      .hour-block {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .hour-label {
+        width: 60px;
+      }
+      .hour-input {
+        flex: 1;
+        padding: 5px;
+      }
+      /* New styles for the date picker */
+      .date-picker {
+        margin: 20px;
+        text-align: center;
+      }
+      .date-picker input {
+        font-size: 16px;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Date Picker -->
+    <div class="date-picker">
+      <input type="date" id="datePicker" />
+    </div>
+
+    <!-- Planner -->
+    <div class="planner" id="planner"></div>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
