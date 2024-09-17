@@ -67,12 +67,17 @@
         margin-bottom: 15px;
       }
 
-      .top3 .goal input {
+      .top3 .goal textarea {
         width: 100%;
+        height: 100px; /* Adjust the height as needed */
         padding: 10px;
         font-size: 16px;
         border: 1px solid #ccc; /* Add a border */
         border-radius: 4px; /* Rounded corners */
+        resize: none; /* Prevent resizing */
+        overflow: auto; /* Enable scroll if text overflows */
+        font-family: inherit; /* Use the same font as the rest of the app */
+        line-height: 1.5; /* Optional: Improve text readability */
       }
 
       /* Styles for the planner section */
@@ -134,13 +139,13 @@
       <div class="top3">
         <h2>Top 3</h2>
         <div class="goal">
-          <input type="text" id="goal1" />
+          <textarea id="goal1"></textarea>
         </div>
         <div class="goal">
-          <input type="text" id="goal2" />
+          <textarea id="goal2"></textarea>
         </div>
         <div class="goal">
-          <input type="text" id="goal3" />
+          <textarea id="goal3"></textarea>
         </div>
       </div>
 
