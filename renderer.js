@@ -5,8 +5,6 @@ async function createPlanner(selectedDate) {
   const planner = document.getElementById("planner");
   planner.innerHTML = ""; // Clear existing planner entries
 
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-
   // Use the selected date as the key
   const d = new Date();
   const today = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
@@ -16,10 +14,7 @@ async function createPlanner(selectedDate) {
   const dateKey = selectedDate || today;
 
   // Retrieve tasks for the selected date
-  const dailyTasks = tasks[dateKey] || {};
-  //const dailyTasks = await window.api.getTasks(dateKey);
-  const daily = await ipcRenderer.invoke("get-tasks", dateKey);
-  console.log(daily);
+  const dailyTasks = await ipcRenderer.invoke("get-tasks", dateKey);
 
   const currentHour = new Date().getHours();
 
@@ -46,8 +41,6 @@ async function createPlanner(selectedDate) {
     hourInput.addEventListener("input", async () => {
       // Update tasks object
       dailyTasks[hour] = hourInput.value;
-      tasks[dateKey] = dailyTasks;
-      localStorage.setItem("tasks", JSON.stringify(tasks));
       await ipcRenderer.invoke('save-tasks', dateKey, dailyTasks);
     });
 
