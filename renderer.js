@@ -11,11 +11,6 @@ async function createPlanner(selectedDate) {
   );
 
   const planner = document.getElementById("planner");
-  const goalInputs = [
-    document.getElementById("goal1"),
-    document.getElementById("goal2"),
-    document.getElementById("goal3"),
-  ];
 
   if (!planner) {
     console.error("renderer.js: Planner element not found.");
@@ -50,23 +45,11 @@ async function createPlanner(selectedDate) {
   }
 
   // Build the UI for the planner
-  const fragment = createPlannerUI(dailyTasks, dateKey);
+  const fragment = createPlannerUI(dailyTasks, dailyGoals, dateKey);
   planner.appendChild(fragment);
 
   // Load the top 3 goals
   loadGoals(dailyGoals);
-
-  // Add event listeners to the goal inputs
-  goalInputs.forEach((input, index) => {
-    input.value = dailyGoals[index] || "";
-
-    // Replace any existing event listener with a new one
-    input.oninput = () => {
-      dailyGoals[index] = input.value;
-      goalsCache[dateKey] = dailyGoals;
-      window.api.saveData(dateKey, dailyTasks, dailyGoals);
-    };
-  });
 
   // Pre-fetch tasks for previous and next dates
   prefetchAdjacentDates(dateKey);
@@ -81,10 +64,17 @@ function loadGoals(dailyGoals) {
 
   goalInputs.forEach((input, index) => {
     input.value = dailyGoals[index] || "";
+
+    // Replace any existing event listener with a new one
+    input.oninput = () => {
+        dailyGoals[index] = input.value;
+        goalsCache[dateKey] = dailyGoals;
+        window.api.saveData(dateKey, dailyTasks, dailyGoals);
+      };
   });
 }
 
-function createPlannerUI(dailyTasks, dateKey) {
+function createPlannerUI(dailyTasks, dailyGoals, dateKey) {
   const fragment = document.createDocumentFragment();
   const currentHour = new Date().getHours();
   const todayKey = new Date().toISOString().split("T")[0];
