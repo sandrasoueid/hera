@@ -1,5 +1,6 @@
 // renderer.js
 
+
 async function createPlanner(selectedDate) {
   const planner = document.getElementById("planner");
   planner.innerHTML = ""; // Clear existing planner entries
@@ -19,7 +20,6 @@ async function createPlanner(selectedDate) {
   //const dailyTasks = await window.api.getTasks(dateKey);
 
   const currentHour = new Date().getHours();
-  console.log(currentHour);
 
   for (let hour = 6; hour < 23; hour++) {
     const hourBlock = document.createElement("div");
@@ -33,12 +33,11 @@ async function createPlanner(selectedDate) {
     hourInput.className = "hour-input";
     hourInput.type = "text";
     hourInput.placeholder = "Add your task";
-    //hourInput.value = dailyTasks[hour] || "";
+    hourInput.value = dailyTasks[hour] || "";
 
     // Highlight current hour if the selected date is today
 
     if (dateKey === today && hour === currentHour) {
-      console.log(dateKey);
       hourBlock.style.backgroundColor = "#ffeb3b"; // Highlight current hour
     }
 
