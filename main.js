@@ -1,12 +1,18 @@
 // main.js
 
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 // Fix __dirname and __filename in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+import { JSONFilePreset } from 'lowdb/node';
+
+// LowDB setup
+const defaultData = { tasks: {} };
+const db = await JSONFilePreset(path.join(__dirname, 'db.json'), defaultData);
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -19,6 +25,14 @@ function createWindow() {
 
   win.loadFile('index.html');
 }
+
+ipcMain.handle('get-tasks', async () => {
+  return await db.read();
+});
+
+ipcMain.handle('set-tasks', async (event, tasks) => {
+  await db.write({ tasks });
+});
 
 app.whenReady().then(() => {
   createWindow();
