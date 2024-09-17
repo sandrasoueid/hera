@@ -1,6 +1,9 @@
 // renderer.js
 const { ipcRenderer } = window.electron;
 
+// Cache to store tasks by date
+const tasksCache = {};
+
 async function createPlanner(selectedDate) {
   const planner = document.getElementById("planner");
   planner.innerHTML = ""; // Clear existing planner entries
@@ -13,8 +16,19 @@ async function createPlanner(selectedDate) {
 
   const dateKey = selectedDate || today;
 
-  // Retrieve tasks for the selected date
-  const dailyTasks = await ipcRenderer.invoke("get-tasks", dateKey);
+  // Check if tasks for the date are in the cache
+  let dailyTasks = tasksCache[dateKey];
+  if (dailyTasks) {
+    console.log(`renderer.js: Using cached tasks for date ${dateKey}`);
+  } else {
+    console.log(`renderer.js: Fetching tasks for date ${dateKey} via IPC`);
+    dailyTasks = await ipcRenderer.invoke("get-tasks", dateKey);
+    // Store the fetched tasks in the cache
+    tasksCache[dateKey] = dailyTasks;
+  }
+
+  // Pre-fetch tasks for previous and next dates
+  prefetchAdjacentDates(dateKey);
 
   const currentHour = new Date().getHours();
 
@@ -41,12 +55,40 @@ async function createPlanner(selectedDate) {
     hourInput.addEventListener("input", async () => {
       // Update tasks object
       dailyTasks[hour] = hourInput.value;
-      await ipcRenderer.invoke('save-tasks', dateKey, dailyTasks);
+      await ipcRenderer.invoke("save-tasks", dateKey, dailyTasks);
     });
 
     hourBlock.appendChild(hourLabel);
     hourBlock.appendChild(hourInput);
     planner.appendChild(hourBlock);
+  }
+}
+
+async function prefetchAdjacentDates(currentDateKey) {
+  const date = new Date(currentDateKey);
+  const prevDate = new Date(date);
+  const nextDate = new Date(date);
+
+  prevDate.setDate(date.getDate() - 1);
+  nextDate.setDate(date.getDate() + 1);
+
+  const prevDateKey = prevDate.toISOString().split("T")[0];
+  const nextDateKey = nextDate.toISOString().split("T")[0];
+
+  // Fetch previous date tasks if not in cache
+  if (!tasksCache[prevDateKey]) {
+    console.log(
+      `renderer.js: Pre-fetching tasks for previous date ${prevDateKey}`
+    );
+    const prevTasks = await ipcRenderer.invoke("get-tasks", prevDateKey);
+    tasksCache[prevDateKey] = prevTasks;
+  }
+
+  // Fetch next date tasks if not in cache
+  if (!tasksCache[nextDateKey]) {
+    console.log(`renderer.js: Pre-fetching tasks for next date ${nextDateKey}`);
+    const nextTasks = await ipcRenderer.invoke("get-tasks", nextDateKey);
+    tasksCache[nextDateKey] = nextTasks;
   }
 }
 
