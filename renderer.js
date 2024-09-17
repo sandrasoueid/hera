@@ -67,6 +67,9 @@ async function createPlanner(selectedDate) {
       window.api.saveData(dateKey, dailyTasks, dailyGoals);
     };
   });
+
+  // Pre-fetch tasks for previous and next dates
+  prefetchAdjacentDates(dateKey);
 }
 
 function loadGoals(dailyGoals) {
@@ -139,7 +142,9 @@ async function prefetchAdjacentDates(currentDateKey) {
     );
     const data = await window.api.getData(prevDateKey);
     const prevTasks = data.tasks || {};
+    const prevGoals = data.goals || ["", "", ""];
     tasksCache[prevDateKey] = prevTasks;
+    goalsCache[prevDateKey] = prevGoals;
   }
 
   // Fetch next date tasks if not in cache
@@ -147,7 +152,9 @@ async function prefetchAdjacentDates(currentDateKey) {
     console.log(`renderer.js: Pre-fetching tasks for next date ${nextDateKey}`);
     const data = await window.api.getData(nextDateKey);
     const nextTasks = data.tasks || {};
+    const nextGoals = data.goals || ["", "", ""];
     tasksCache[nextDateKey] = nextTasks;
+    goalsCache[nextDateKey] = nextGoals;
   }
 }
 
