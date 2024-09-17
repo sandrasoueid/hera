@@ -13,6 +13,7 @@ function createPlanner(selectedDate) {
     const dailyTasks = tasks[dateKey] || {};
   
     const currentHour = new Date().getHours();
+    console.log(currentHour);
   
     for (let hour = 0; hour < 24; hour++) {
       const hourBlock = document.createElement('div');
@@ -29,7 +30,11 @@ function createPlanner(selectedDate) {
       hourInput.value = dailyTasks[hour] || '';
   
       // Highlight current hour if the selected date is today
-      if (dateKey === new Date().toISOString().split('T')[0] && hour === currentHour) {
+      const d = new Date();
+      const today = new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().split('T')[0];
+      
+      if (dateKey === today && hour === currentHour) {
+        console.log(dateKey);
         hourBlock.style.backgroundColor = '#ffeb3b'; // Highlight current hour
       }
   
@@ -50,7 +55,8 @@ function createPlanner(selectedDate) {
     const datePicker = document.getElementById('datePicker');
     const prevDateBtn = document.getElementById('prevDate');
     const nextDateBtn = document.getElementById('nextDate');
-    const today = new Date().toISOString().split('T')[0];
+    const d = new Date();
+    const today = new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().split('T')[0];
     datePicker.value = today;
   
     // Initialize planner with today's date
