@@ -158,7 +158,8 @@
 
       .todo-list .todo-item input[type="text"] {
         flex: 1;
-        margin-left: 10px;
+        min-width: 0; /* Allow the input to shrink */
+        /* Remove margin-left to prevent extra space */
         padding: 5px;
         font-size: 16px;
         border: 1px solid #ccc;
