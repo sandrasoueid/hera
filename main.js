@@ -11,7 +11,7 @@ const __dirname = dirname(__filename);
 import { JSONFilePreset } from "lowdb/node";
 
 // LowDB setup
-const defaultData = { tasks: {} };
+const defaultData = { dates: {} };
 const db = await JSONFilePreset(path.join(__dirname, "db.json"), defaultData);
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -33,22 +33,27 @@ function createWindow() {
 }
 
 // IPC handlers for getting and saving tasks
-ipcMain.handle("get-tasks", async (event, dateKey) => {
+ipcMain.handle("get-data", async (event, dateKey) => {
   await db.read();
   // Ensure db.data is initialized
-  db.data = db.data || { tasks: {} };
-  db.data.tasks = db.data.tasks || {};
-  const tasks = db.data.tasks[dateKey] || {};
-  return tasks;
+  db.data ||= { dates: {} };
+  db.data.dates ||= {};
+  const dateData = db.data.dates[dateKey] || { tasks: {}, goals: ["", "", ""] };
+  const tasks = dateData.tasks || {};
+  const goals = dateData.goals || ["", "", ""];
+
+  console.log(`ipcMain: Returning data for ${dateKey}:`, { tasks, goals });
+  return { tasks, goals };
 });
 
-ipcMain.handle("save-tasks", async (event, dateKey, tasks) => {
-  await db.read();
-  // Ensure db.data is initialized
-  db.data = db.data || { tasks: {} };
-  db.data.tasks = db.data.tasks || {};
-  db.data.tasks[dateKey] = tasks;
-  await db.write();
+ipcMain.handle("save-data", async (event, dateKey, tasks, goals) => {
+    console.log(`ipcMain: Received 'save-data' for dateKey: ${dateKey}`);
+    await db.read();
+    db.data ||= { dates: {} };
+    db.data.dates ||= {};
+    db.data.dates[dateKey] = { tasks, goals };
+    await db.write();
+    console.log(`ipcMain: Data for ${dateKey} saved.`);
 });
 
 app.whenReady().then(() => {
