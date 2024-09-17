@@ -49,8 +49,10 @@ async function createPlanner(selectedDate) {
     // Highlight current hour if the selected date is today
 
     if (dateKey === today && hour === currentHour) {
-      hourBlock.style.backgroundColor = "#ffeb3b"; // Highlight current hour
-    }
+        hourBlock.classList.add('current-hour'); // Add the 'current-hour' class
+      } else {
+        hourBlock.classList.remove('current-hour'); // Remove the class if not current hour
+      }
 
     hourInput.addEventListener("input", async () => {
       // Update tasks object

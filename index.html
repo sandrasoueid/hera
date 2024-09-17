@@ -6,45 +6,113 @@
     <meta charset="UTF-8" />
     <title>Hera - Daily Planner</title>
     <style>
-      /* Add your CSS styling here */
+      /* Reset and base styles */
+      * {
+        box-sizing: border-box;
+      }
+    
       body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #f0f0f0; /* Light grey background */
       }
-      .planner {
-        display: flex;
-        flex-direction: column;
-        margin: 20px;
-      }
-      .hour-block {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-      .hour-label {
-        width: 60px;
-      }
-      .hour-input {
-        flex: 1;
-        padding: 5px;
-      }
-      /* New styles for the date picker */
+    
+      /* Container for the date picker and navigation buttons */
       .date-picker {
         margin: 20px;
         text-align: center;
       }
-      .date-picker input[type="date"] {
+    
+      .date-picker input[type='date'] {
         font-size: 16px;
         padding: 5px;
         width: 200px;
       }
+    
       .date-picker button {
         font-size: 16px;
         padding: 5px 10px;
         margin: 0 10px;
       }
+    
+      /* Main container to hold both columns */
+      .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center; /* Center the content horizontally */
+        align-items: flex-start; /* Align items to the top */
+        margin: 0 auto;
+        max-width: 1200px; /* Set a max-width for the content */
+        gap: 40px; /* Space between the two columns */
+        padding: 20px;
+      }
+    
+      /* Styles for the "Top 3 Goals" section */
+      .top3 {
+        width: 30%;
+        background-color: #ffffff; /* White background */
+        padding: 20px;
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      }
+    
+      .top3 h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+    
+      .top3 .goal {
+        margin-bottom: 15px;
+      }
+    
+      .top3 .goal input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc; /* Add a border */
+        border-radius: 4px; /* Rounded corners */
+      }
+    
+      /* Styles for the planner section */
+      .planner-container {
+        width: 70%;
+        background-color: #ffffff; /* White background */
+        padding: 20px;
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      }
+    
+      .planner {
+        display: flex;
+        flex-direction: column;
+      }
+    
+      .hour-block {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+    
+      .hour-label {
+        width: 60px;
+        font-weight: bold;
+      }
+    
+      .hour-input {
+        flex: 1;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc; /* Add a border */
+        border-radius: 4px; /* Rounded corners */
+      }
+    
+      /* Highlight for the current hour */
+      .hour-block.current-hour {
+        background-color: #ffeb3b; /* Highlight color */
+      }
     </style>
+    
   </head>
   <body>
     <!-- Date Picker -->
@@ -54,8 +122,27 @@
       <button id="nextDate">Next</button>
     </div>
 
-    <!-- Planner -->
-    <div class="planner" id="planner"></div>
+     <!-- Container for the two columns -->
+  <div class="container">
+    <!-- Top 3 Goals Section -->
+    <div class="top3">
+      <h2>Top 3 Goals</h2>
+      <div class="goal">
+        <input type="text" id="goal1" placeholder="Goal 1" />
+      </div>
+      <div class="goal">
+        <input type="text" id="goal2" placeholder="Goal 2" />
+      </div>
+      <div class="goal">
+        <input type="text" id="goal3" placeholder="Goal 3" />
+      </div>
+    </div>
+
+    <!-- Planner Section -->
+    <div class="planner-container">
+      <div class="planner" id="planner"></div>
+    </div>
+  </div>
 
     <script type="module" src="./renderer.js"></script>
   </body>
