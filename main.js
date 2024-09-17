@@ -26,6 +26,11 @@ function createWindow() {
   win.loadFile('index.html');
 }
 
+ipcMain.handle('please', (...args) => {
+    console.log('Sent args:', args)
+    return 'Thanks!'
+  })
+
 ipcMain.handle('get-tasks', async () => {
   return await db.read();
 });
