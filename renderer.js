@@ -1,8 +1,7 @@
 // renderer.js
 
-// Cache to store tasks and goals by date
-const tasksCache = {};
-const goalsCache = {};
+// Cache to store daily data by date
+const dailyCache = {};
 
 async function createPlanner(selectedDate) {
   console.log(
@@ -27,22 +26,27 @@ async function createPlanner(selectedDate) {
 
   const dateKey = selectedDate || today;
 
-  // Check if tasks for the date are in the cache
-  let dailyTasks = tasksCache[dateKey];
-  let dailyGoals = goalsCache[dateKey];
+  // Check if data for the date is in the cache
+  let dailyData = dailyCache[dateKey];
 
-  if (dailyTasks && dailyGoals) {
-    console.log(`renderer.js: Using cached tasks for date ${dateKey}`);
+  if (dailyData) {
+    console.log(`renderer.js: Using cached data for date ${dateKey}`);
   } else {
-    console.log(`renderer.js: Fetching tasks for date ${dateKey} via IPC`);
+    console.log(`renderer.js: Fetching data for date ${dateKey} via IPC`);
     const data = await window.api.getData(dateKey);
-    dailyTasks = data.tasks || {};
-    dailyGoals = data.goals || ["", "", ""];
+    dailyData = data || {
+      tasks: {},
+      goals: ['', '', ''],
+      todos: Array.from({ length: 8 }, () => ({ text: '', completed: false })),
+      meals: '',
+      waterIntake: Array(8).fill(false),
+    };
 
-    // Store the fetched tasks in the cache
-    tasksCache[dateKey] = dailyTasks;
-    goalsCache[dateKey] = dailyGoals;
+    // Store the fetched data in the cache
+    dailyCache[dateKey] = dailyData;
   }
+
+  const { tasks: dailyTasks, goals: dailyGoals } = dailyData;
 
   // Build the UI for the planner
   const fragment = createPlannerUI(dailyTasks, dailyGoals, dateKey);
@@ -51,7 +55,7 @@ async function createPlanner(selectedDate) {
   // Load the top 3 goals
   loadGoals(dailyGoals, dailyTasks, dateKey);
 
-  // Pre-fetch tasks for previous and next dates
+  // Pre-fetch data for previous and next dates
   prefetchAdjacentDates(dateKey);
 }
 
@@ -67,10 +71,10 @@ function loadGoals(dailyGoals, dailyTasks, dateKey) {
 
     // Replace any existing event listener with a new one
     input.oninput = () => {
-        dailyGoals[index] = input.value;
-        goalsCache[dateKey] = dailyGoals;
-        window.api.saveData(dateKey, dailyTasks, dailyGoals);
-      };
+      dailyGoals[index] = input.value;
+      dailyCache[dateKey].goals = dailyGoals;
+      window.api.saveData(dateKey, dailyCache[dateKey]);
+    };
   });
 }
 
@@ -102,8 +106,8 @@ function createPlannerUI(dailyTasks, dailyGoals, dateKey) {
 
     hourInput.oninput = () => {
       dailyTasks[hour] = hourInput.value;
-      tasksCache[dateKey] = dailyTasks;
-      window.api.saveData(dateKey, dailyTasks, dailyGoals);
+      dailyCache[dateKey].tasks = dailyTasks;
+      window.api.saveData(dateKey, dailyCache[dateKey]);
     };
 
     hourBlock.appendChild(hourLabel);
@@ -125,26 +129,32 @@ async function prefetchAdjacentDates(currentDateKey) {
   const prevDateKey = prevDate.toISOString().split("T")[0];
   const nextDateKey = nextDate.toISOString().split("T")[0];
 
-  // Fetch previous date tasks if not in cache
-  if (!tasksCache[prevDateKey]) {
+  // Fetch previous date data if not in cache
+  if (!dailyCache[prevDateKey]) {
     console.log(
-      `renderer.js: Pre-fetching tasks for previous date ${prevDateKey}`
+      `renderer.js: Pre-fetching data for previous date ${prevDateKey}`
     );
     const data = await window.api.getData(prevDateKey);
-    const prevTasks = data.tasks || {};
-    const prevGoals = data.goals || ["", "", ""];
-    tasksCache[prevDateKey] = prevTasks;
-    goalsCache[prevDateKey] = prevGoals;
+    dailyCache[prevDateKey] = data || {
+      tasks: {},
+      goals: ['', '', ''],
+      todos: Array.from({ length: 8 }, () => ({ text: '', completed: false })),
+      meals: '',
+      waterIntake: Array(8).fill(false),
+    };
   }
 
-  // Fetch next date tasks if not in cache
-  if (!tasksCache[nextDateKey]) {
-    console.log(`renderer.js: Pre-fetching tasks for next date ${nextDateKey}`);
+  // Fetch next date data if not in cache
+  if (!dailyCache[nextDateKey]) {
+    console.log(`renderer.js: Pre-fetching data for next date ${nextDateKey}`);
     const data = await window.api.getData(nextDateKey);
-    const nextTasks = data.tasks || {};
-    const nextGoals = data.goals || ["", "", ""];
-    tasksCache[nextDateKey] = nextTasks;
-    goalsCache[nextDateKey] = nextGoals;
+    dailyCache[nextDateKey] = data || {
+      tasks: {},
+      goals: ['', '', ''],
+      todos: Array.from({ length: 8 }, () => ({ text: '', completed: false })),
+      meals: '',
+      waterIntake: Array(8).fill(false),
+    };
   }
 }
 
@@ -181,6 +191,63 @@ function setupDatePicker() {
     datePicker.value = newDate;
     createPlanner(newDate);
   });
+}
+
+function loadTodos(dailyTodos, dateKey, dailyData) {
+  const todoItemsContainer = document.getElementById("todoItems");
+  todoItemsContainer.innerHTML = ""; // Clear any existing items
+
+  // Ensure dailyTodos is an array of 8 items
+  if (!dailyTodos || dailyTodos.length !== 8) {
+    dailyTodos = Array.from({ length: 8 }, () => ({
+      text: "",
+      completed: false,
+    }));
+    dailyData.todos = dailyTodos;
+  }
+
+  for (let i = 0; i < 8; i++) {
+    createTodoItem(i, dailyTodos, dateKey, dailyData);
+  }
+}
+
+function createTodoItem(index, dailyTodos, dateKey, dailyData) {
+  const todoItemsContainer = document.getElementById("todoItems");
+
+  const todoItemDiv = document.createElement("div");
+  todoItemDiv.className = "todo-item";
+  if (dailyTodos[index].completed) {
+    todoItemDiv.classList.add("completed");
+  }
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = dailyTodos[index].completed;
+
+  const textInput = document.createElement("input");
+  textInput.type = "text";
+  textInput.value = dailyTodos[index].text;
+  textInput.placeholder = `Todo Item ${index + 1}`;
+
+  // Event Listeners
+  checkbox.onchange = () => {
+    dailyTodos[index].completed = checkbox.checked;
+    if (checkbox.checked) {
+      todoItemDiv.classList.add("completed");
+    } else {
+      todoItemDiv.classList.remove("completed");
+    }
+    saveData(dateKey, dailyData);
+  };
+
+  textInput.oninput = () => {
+    dailyTodos[index].text = textInput.value;
+    saveData(dateKey, dailyData);
+  };
+
+  todoItemDiv.appendChild(checkbox);
+  todoItemDiv.appendChild(textInput);
+  todoItemsContainer.appendChild(todoItemDiv);
 }
 
 window.onload = () => {

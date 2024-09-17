@@ -90,7 +90,10 @@ button:hover {
 
 .todo-item input[type="text"] {
   flex: 1;
-  /* ... existing styles ... */
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .todo-item.completed input[type="text"] {
