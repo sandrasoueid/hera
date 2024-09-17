@@ -35,47 +35,138 @@ button:hover {
   box-sizing: border-box;
 }
 
-/* Left Column */
-.left-column {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0; /* Light grey background */
 }
 
-/* Common styles for sections in the left column */
-.left-column .section {
+/* Container for the date picker and navigation buttons */
+.date-picker {
+  margin: 20px;
+  text-align: center;
+}
+
+.date-picker input[type="date"] {
+  font-size: 16px;
+  padding: 5px;
+  width: 200px;
+}
+
+.date-picker button {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 0 10px;
+}
+
+/* Main container to hold both columns */
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Center the content horizontally */
+  align-items: flex-start; /* Align items to the top */
+  margin: 0 auto;
+  max-width: 1300px; /* Set a max-width for the content */
+  gap: 40px; /* Space between the two columns */
+  padding: 20px;
+}
+
+/* Left Column */
+.left-column {
+  width: 30%; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between sections */
+}
+
+/* Styles for the "Top 3 Goals" section */
+.top3 {
   background-color: #ffffff; /* White background */
   padding: 20px;
   border-radius: 8px; /* Rounded corners */
-  box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Top 3 Goals Section */
-.top3 {
-  display: flex;
-  flex-direction: column;
+.top3 h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
 }
 
 .top3 .goal {
   margin-bottom: 15px;
-  width: 100%;
 }
 
 .top3 .goal textarea {
   width: 100%;
-  /* ... existing styles ... */
+  height: 100px; /* Adjust the height as needed */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Rounded corners */
+  resize: none; /* Prevent resizing */
+  overflow: auto; /* Enable scroll if text overflows */
+  font-family: inherit; /* Use the same font as the rest of the app */
+  line-height: 1.5; /* Optional: Improve text readability */
 }
 
-/* Todo List Section */
-.todo-list {
+/* Styles for the planner section */
+.planner-container {
+  width: 70%;
+  background-color: #ffffff; /* White background */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.planner-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.planner {
   display: flex;
   flex-direction: column;
 }
 
-.todo-list h2 {
+.hour-block {
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
+}
+
+.hour-label {
+  width: 60px;
+  font-weight: bold;
+}
+
+.hour-input {
+  flex: 1;
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Rounded corners */
+}
+
+/* Highlight for the current hour */
+.hour-block.current-hour {
+  background-color: #ffeb3b; /* Highlight color */
+}
+
+/* Todo List Section */
+.todo-list {
+  background-color: #ffffff; /* White background */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.todo-list h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
 }
 
 .todo-list .todo-item {
@@ -85,13 +176,13 @@ button:hover {
 }
 
 .todo-list .todo-item input[type="checkbox"] {
-  flex-shrink:0;
+  flex-shrink: 0;
   margin-right: 10px;
 }
 
 .todo-list .todo-item input[type="text"] {
   flex: 1;
-  margin-left: 10px;
+  min-width: 0; /* Allow the input to shrink */
   padding: 5px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -105,40 +196,55 @@ button:hover {
 
 /* Meals Section */
 .meals {
-  display: flex;
-  flex-direction: column;
+  background-color: #ffffff; /* White background */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .meals h2 {
-  margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
 }
 
 .meals textarea {
   width: 100%;
-  /* ... existing styles ... */
+  height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.5;
 }
 
 /* Water Intake Section */
 .water-intake {
-  display: flex;
-  flex-direction: column;
+  background-color: #ffffff; /* White background */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .water-intake h2 {
-  margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
 }
 
-.water-checkboxes {
+.water-intake .water-checkboxes {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.water-checkboxes label {
+.water-intake .water-checkboxes label {
   display: flex;
   align-items: center;
 }
 
-.water-checkboxes input[type="checkbox"] {
+.water-intake .water-checkboxes input[type="checkbox"] {
   margin-right: 10px;
 }
