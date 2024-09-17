@@ -49,13 +49,13 @@ async function createPlanner(selectedDate) {
   planner.appendChild(fragment);
 
   // Load the top 3 goals
-  loadGoals(dailyGoals);
+  loadGoals(dailyGoals, dailyTasks, dateKey);
 
   // Pre-fetch tasks for previous and next dates
   prefetchAdjacentDates(dateKey);
 }
 
-function loadGoals(dailyGoals) {
+function loadGoals(dailyGoals, dailyTasks, dateKey) {
   const goalInputs = [
     document.getElementById("goal1"),
     document.getElementById("goal2"),
