@@ -46,10 +46,10 @@ async function createPlanner(selectedDate) {
     dailyCache[dateKey] = dailyData;
   }
 
-  const { tasks: dailyTasks, goals: dailyGoals } = dailyData;
+  const { tasks: dailyTasks, goals: dailyGoals, todos: dailyTodos, meals: dailyMeals, waterIntake: dailyWaterIntake } = dailyData;
 
   // Build the UI for the planner
-  const fragment = createPlannerUI(dailyTasks, dailyGoals, dateKey);
+  const fragment = createPlannerUI(dailyTasks, dateKey);
   planner.appendChild(fragment);
 
   // Load the top 3 goals
@@ -59,7 +59,7 @@ async function createPlanner(selectedDate) {
   prefetchAdjacentDates(dateKey);
 }
 
-function loadGoals(dailyGoals, dailyTasks, dateKey) {
+function loadGoals(dailyGoals, dateKey) {
   const goalInputs = [
     document.getElementById("goal1"),
     document.getElementById("goal2"),
@@ -78,7 +78,7 @@ function loadGoals(dailyGoals, dailyTasks, dateKey) {
   });
 }
 
-function createPlannerUI(dailyTasks, dailyGoals, dateKey) {
+function createPlannerUI(dailyTasks, dateKey) {
   const fragment = document.createDocumentFragment();
   const currentHour = new Date().getHours();
   const todayKey = new Date().toISOString().split("T")[0];

@@ -38,23 +38,30 @@ ipcMain.handle("get-data", async (event, dateKey) => {
   // Ensure db.data is initialized
   db.data ||= { dates: {} };
   db.data.dates ||= {};
-  const dateData = db.data.dates[dateKey] || { tasks: {}, goals: ["", "", ""] };
-  const tasks = dateData.tasks || {};
-  const goals = dateData.goals || ["", "", ""];
+  const dateData = db.data.dates[dateKey] || {
+    tasks: {},
+    goals: ["", "", ""],
+    todos: Array.from({ length: 8 }, () => ({ text: "", completed: false })),
+    meals: "",
+    waterIntake: Array(8).fill(false),
+  };
 
-  console.log(`ipcMain: Returning data for ${dateKey}:`, { tasks, goals });
-  return { tasks, goals };
+  console.log(`ipcMain: Returning data for ${dateKey}:`, dateData);
+  return dateData;
 });
 
-ipcMain.handle("save-data", async (event, dateKey, tasks, goals) => {
+ipcMain.handle(
+  "save-data",
+  async (event, dateKey, data) => {
     console.log(`ipcMain: Received 'save-data' for dateKey: ${dateKey}`);
     await db.read();
     db.data ||= { dates: {} };
     db.data.dates ||= {};
-    db.data.dates[dateKey] = { tasks, goals };
+    db.data.dates[dateKey] = data;
     await db.write();
     console.log(`ipcMain: Data for ${dateKey} saved.`);
-});
+  }
+);
 
 app.whenReady().then(() => {
   createWindow();
