@@ -36,9 +36,9 @@ async function createPlanner(selectedDate) {
     const data = await window.api.getData(dateKey);
     dailyData = data || {
       tasks: {},
-      goals: ['', '', ''],
-      todos: Array.from({ length: 8 }, () => ({ text: '', completed: false })),
-      meals: '',
+      goals: ["", "", ""],
+      todos: Array.from({ length: 8 }, () => ({ text: "", completed: false })),
+      meals: "",
       waterIntake: Array(8).fill(false),
     };
 
@@ -46,7 +46,13 @@ async function createPlanner(selectedDate) {
     dailyCache[dateKey] = dailyData;
   }
 
-  const { tasks: dailyTasks, goals: dailyGoals, todos: dailyTodos, meals: dailyMeals, waterIntake: dailyWaterIntake } = dailyData;
+  const {
+    tasks: dailyTasks,
+    goals: dailyGoals,
+    todos: dailyTodos,
+    meals: dailyMeals,
+    waterIntake: dailyWaterIntake,
+  } = dailyData;
 
   // Build the UI for the planner
   const fragment = createPlannerUI(dailyTasks, dateKey);
@@ -54,6 +60,8 @@ async function createPlanner(selectedDate) {
 
   // Load the top 3 goals
   loadGoals(dailyGoals, dateKey);
+
+  loadTodos(dailyTodos, dateKey, dailyData);
 
   // Pre-fetch data for previous and next dates
   prefetchAdjacentDates(dateKey);
@@ -137,9 +145,9 @@ async function prefetchAdjacentDates(currentDateKey) {
     const data = await window.api.getData(prevDateKey);
     dailyCache[prevDateKey] = data || {
       tasks: {},
-      goals: ['', '', ''],
-      todos: Array.from({ length: 8 }, () => ({ text: '', completed: false })),
-      meals: '',
+      goals: ["", "", ""],
+      todos: Array.from({ length: 8 }, () => ({ text: "", completed: false })),
+      meals: "",
       waterIntake: Array(8).fill(false),
     };
   }
@@ -150,9 +158,9 @@ async function prefetchAdjacentDates(currentDateKey) {
     const data = await window.api.getData(nextDateKey);
     dailyCache[nextDateKey] = data || {
       tasks: {},
-      goals: ['', '', ''],
-      todos: Array.from({ length: 8 }, () => ({ text: '', completed: false })),
-      meals: '',
+      goals: ["", "", ""],
+      todos: Array.from({ length: 8 }, () => ({ text: "", completed: false })),
+      meals: "",
       waterIntake: Array(8).fill(false),
     };
   }

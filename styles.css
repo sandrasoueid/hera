@@ -78,25 +78,27 @@ button:hover {
   margin-bottom: 10px;
 }
 
-.todo-item {
+.todo-list .todo-item {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.todo-item input[type="checkbox"] {
+.todo-list .todo-item input[type="checkbox"] {
+  flex-shrink:0;
   margin-right: 10px;
 }
 
-.todo-item input[type="text"] {
+.todo-list .todo-item input[type="text"] {
   flex: 1;
+  margin-left: 10px;
   padding: 5px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.todo-item.completed input[type="text"] {
+.todo-list .todo-item.completed input[type="text"] {
   text-decoration: line-through;
   color: #888;
 }
