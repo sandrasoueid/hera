@@ -43,14 +43,21 @@
         justify-content: center; /* Center the content horizontally */
         align-items: flex-start; /* Align items to the top */
         margin: 0 auto;
-        max-width: 1200px; /* Set a max-width for the content */
+        max-width: 1300px; /* Set a max-width for the content */
         gap: 40px; /* Space between the two columns */
         padding: 20px;
       }
 
+      /* Left Column */
+      .left-column {
+        width: 30%; /* Adjust as needed */
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Space between sections */
+      }
+
       /* Styles for the "Top 3 Goals" section */
       .top3 {
-        width: 30%;
         background-color: #ffffff; /* White background */
         padding: 20px;
         border-radius: 8px; /* Rounded corners */
@@ -123,6 +130,98 @@
       .hour-block.current-hour {
         background-color: #ffeb3b; /* Highlight color */
       }
+
+      /* Todo List Section */
+      .todo-list {
+        background-color: #ffffff; /* White background */
+        padding: 20px;
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      }
+
+      .todo-list h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: -5px;
+      }
+
+      .todo-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .todo-item input[type="checkbox"] {
+        margin-right: 10px;
+      }
+
+      .todo-item input[type="text"] {
+        flex: 1;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .todo-item.completed input[type="text"] {
+        text-decoration: line-through;
+        color: #888;
+      }
+
+      /* Meals Section */
+      .meals {
+        background-color: #ffffff; /* White background */
+        padding: 20px;
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      }
+
+      .meals h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: -5px;
+      }
+
+      .meals textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: none;
+        font-family: inherit;
+        line-height: 1.5;
+      }
+
+      /* Water Intake Section */
+      .water-intake {
+        background-color: #ffffff; /* White background */
+        padding: 20px;
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      }
+
+      .water-intake h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: -5px;
+      }
+
+      .water-intake .water-checkboxes {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .water-intake .water-checkboxes label {
+        display: flex;
+        align-items: center;
+      }
+
+      .water-intake .water-checkboxes input[type="checkbox"] {
+        margin-right: 10px;
+      }
     </style>
   </head>
   <body>
@@ -135,17 +234,41 @@
 
     <!-- Container for the two columns -->
     <div class="container">
-      <!-- Top 3 Goals Section -->
-      <div class="top3">
-        <h2>Top 3</h2>
-        <div class="goal">
-          <textarea id="goal1"></textarea>
+      <!-- Left Column -->
+      <div class="left-column">
+        <!-- Top 3 Goals Section -->
+        <div class="section top3">
+          <h2>Top 3</h2>
+          <div class="goal">
+            <textarea id="goal1" placeholder="Goal 1"></textarea>
+          </div>
+          <div class="goal">
+            <textarea id="goal2" placeholder="Goal 2"></textarea>
+          </div>
+          <div class="goal">
+            <textarea id="goal3" placeholder="Goal 3"></textarea>
+          </div>
         </div>
-        <div class="goal">
-          <textarea id="goal2"></textarea>
+
+        <!-- Todo List Section -->
+        <div class="section todo-list">
+          <h2>To Do</h2>
+          <div class="todoItems" id="todoItems"></div>
         </div>
-        <div class="goal">
-          <textarea id="goal3"></textarea>
+
+        <!-- Meals Section -->
+        <div class="section meals">
+          <h2>Meals</h2>
+          <textarea
+            id="meals"
+            placeholder="Plan your meals for the day"
+          ></textarea>
+        </div>
+
+        <!-- Water Intake Section -->
+        <div class="section water-intake">
+          <h2>Water</h2>
+          <div class="water-checkboxes" id="waterCheckboxes"></div>
         </div>
       </div>
 

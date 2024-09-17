@@ -14,6 +14,9 @@ input[type="text"] {
   }
 
   .top3,
+  .todo-list,
+  .meals,
+  .water-intake,
   .planner-container {
     width: 90%;
   }
@@ -25,4 +28,112 @@ input[type="text"]:hover {
 
 button:hover {
   background-color: #e0e0e0;
+}
+
+/* Global box-sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Left Column */
+.left-column {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Common styles for sections in the left column */
+.left-column .section {
+  background-color: #ffffff; /* White background */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Top 3 Goals Section */
+.top3 {
+  display: flex;
+  flex-direction: column;
+}
+
+.top3 .goal {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.top3 .goal textarea {
+  width: 100%;
+  /* ... existing styles ... */
+}
+
+/* Todo List Section */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-list h2 {
+  margin-bottom: 10px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.todo-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.todo-item input[type="text"] {
+  flex: 1;
+  /* ... existing styles ... */
+}
+
+.todo-item.completed input[type="text"] {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* Meals Section */
+.meals {
+  display: flex;
+  flex-direction: column;
+}
+
+.meals h2 {
+  margin-bottom: 10px;
+}
+
+.meals textarea {
+  width: 100%;
+  /* ... existing styles ... */
+}
+
+/* Water Intake Section */
+.water-intake {
+  display: flex;
+  flex-direction: column;
+}
+
+.water-intake h2 {
+  margin-bottom: 10px;
+}
+
+.water-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.water-checkboxes label {
+  display: flex;
+  align-items: center;
+}
+
+.water-checkboxes input[type="checkbox"] {
+  margin-right: 10px;
 }
