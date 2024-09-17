@@ -32,10 +32,23 @@ function createWindow() {
   win.loadFile("index.html");
 }
 
-ipcMain.on("toMain", (event, data) => {
-  // Handle incoming data from renderer process
-  console.log("hello", data);
-  win.webContents.send("fromMain", "Hello from main process!");
+// IPC handlers for getting and saving tasks
+ipcMain.handle("get-tasks", async (event, dateKey) => {
+  await db.read();
+  // Ensure db.data is initialized
+  db.data = db.data || { tasks: {} };
+  db.data.tasks = db.data.tasks || {};
+  const tasks = db.data.tasks[dateKey] || {};
+  return tasks;
+});
+
+ipcMain.handle("save-tasks", async (event, dateKey, tasks) => {
+  await db.read();
+  // Ensure db.data is initialized
+  db.data = db.data || { tasks: {} };
+  db.data.tasks = db.data.tasks || {};
+  db.data.tasks[dateKey] = tasks;
+  await db.write();
 });
 
 app.whenReady().then(() => {

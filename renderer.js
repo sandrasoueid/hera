@@ -1,5 +1,5 @@
 // renderer.js
-
+const { ipcRenderer } = window.electron;
 
 async function createPlanner(selectedDate) {
   const planner = document.getElementById("planner");
@@ -18,6 +18,8 @@ async function createPlanner(selectedDate) {
   // Retrieve tasks for the selected date
   const dailyTasks = tasks[dateKey] || {};
   //const dailyTasks = await window.api.getTasks(dateKey);
+  const daily = await ipcRenderer.invoke("get-tasks", dateKey);
+  console.log(daily);
 
   const currentHour = new Date().getHours();
 
@@ -41,11 +43,12 @@ async function createPlanner(selectedDate) {
       hourBlock.style.backgroundColor = "#ffeb3b"; // Highlight current hour
     }
 
-    hourInput.addEventListener("input", () => {
+    hourInput.addEventListener("input", async () => {
       // Update tasks object
       dailyTasks[hour] = hourInput.value;
       tasks[dateKey] = dailyTasks;
       localStorage.setItem("tasks", JSON.stringify(tasks));
+      await ipcRenderer.invoke('save-tasks', dateKey, dailyTasks);
     });
 
     hourBlock.appendChild(hourLabel);
