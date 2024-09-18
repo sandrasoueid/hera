@@ -58,10 +58,9 @@ async function createPlanner(selectedDate) {
   const fragment = createPlannerUI(dailyTasks, dateKey, today);
   planner.appendChild(fragment);
 
-  // Load the top 3 goals
-  loadGoals(dailyGoals, dateKey);
 
-  loadTodos(dailyTodos, dateKey, dailyData);
+  loadGoals(dailyGoals, dateKey);
+  loadTodos(dailyTodos, dateKey);
 
   // Pre-fetch data for previous and next dates
   prefetchAdjacentDates(dateKey);
@@ -200,7 +199,7 @@ function setupDatePicker() {
   });
 }
 
-function loadTodos(dailyTodos, dateKey, dailyData) {
+function loadTodos(dailyTodos, dateKey) {
   const todoItemsContainer = document.getElementById("todoItems");
   todoItemsContainer.innerHTML = ""; // Clear any existing items
 
@@ -214,11 +213,11 @@ function loadTodos(dailyTodos, dateKey, dailyData) {
   }
 
   for (let i = 0; i < 8; i++) {
-    createTodoItem(i, dailyTodos, dateKey, dailyData);
+    createTodoItem(i, dailyTodos, dateKey);
   }
 }
 
-function createTodoItem(index, dailyTodos, dateKey, dailyData) {
+function createTodoItem(index, dailyTodos, dateKey) {
   const todoItemsContainer = document.getElementById("todoItems");
 
   const todoItemDiv = document.createElement("div");
