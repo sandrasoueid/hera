@@ -40,6 +40,7 @@ async function createPlanner(selectedDate) {
       todos: Array.from({ length: 8 }, () => ({ text: "", completed: false })),
       meals: "",
       waterIntake: Array(8).fill(false),
+      notes: "",
     };
 
     // Store the fetched data in the cache
@@ -52,6 +53,7 @@ async function createPlanner(selectedDate) {
     todos: dailyTodos,
     meals: dailyMeals,
     waterIntake: dailyWaterIntake,
+    notes: dailyNotes,
   } = dailyData;
 
   // Build the UI for the planner
@@ -61,6 +63,7 @@ async function createPlanner(selectedDate) {
   loadGoals(dailyGoals, dateKey);
   loadTodos(dailyTodos, dateKey);
   loadMeals(dailyMeals, dateKey);
+  loadNotes(dailyNotes, dateKey);
   loadWaterIntake(dailyWaterIntake, dateKey);
 
   // Pre-fetch data for previous and next dates
@@ -73,6 +76,16 @@ function loadMeals(dailyMeals, dateKey) {
 
   mealsInput.oninput = () => {
     dailyCache[dateKey].meals = mealsInput.value;
+    window.api.saveData(dateKey, dailyCache[dateKey]);
+  };
+}
+
+function loadNotes(dailyNotes, dateKey) {
+  const notesInput = document.getElementById("notes");
+  notesInput.value = dailyNotes || "";
+
+  notesInput.oninput = () => {
+    dailyCache[dateKey].notes = notesInput.value;
     window.api.saveData(dateKey, dailyCache[dateKey]);
   };
 }
@@ -179,6 +192,7 @@ async function prefetchAdjacentDates(currentDateKey) {
       todos: Array.from({ length: 8 }, () => ({ text: "", completed: false })),
       meals: "",
       waterIntake: Array(8).fill(false),
+      notes: "",
     };
   }
 
@@ -192,6 +206,7 @@ async function prefetchAdjacentDates(currentDateKey) {
       todos: Array.from({ length: 8 }, () => ({ text: "", completed: false })),
       meals: "",
       waterIntake: Array(8).fill(false),
+      notes: "",
     };
   }
 }

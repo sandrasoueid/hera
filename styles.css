@@ -1,6 +1,6 @@
 input[type="text"] {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -18,7 +18,18 @@ input[type="text"] {
   .meals,
   .water-intake,
   .planner-container {
-    width: 90%;
+    width: 100%;
+  }
+
+  .left-column,
+  .right-column {
+    width: 100%;
+  }
+
+  /* Reset justify-content */
+  .left-column,
+  .right-column {
+    justify-content: flex-start;
   }
 }
 
@@ -113,7 +124,7 @@ body {
 
 /* Styles for the planner section */
 .planner-container {
-  width: 70%;
+  width: 100%;
   background-color: #ffffff; /* White background */
   padding: 20px;
   border-radius: 8px; /* Rounded corners */
@@ -251,4 +262,40 @@ body {
 
 .water-intake .water-checkboxes input[type="checkbox"] {
   margin-right: 5px; /* Space between checkbox and label text */
+}
+
+/* Notes Section */
+.notes {
+  background-color: #ffffff; /* White background */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  flex-shrink: 0;
+}
+
+.notes h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.notes textarea {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Right Column */
+.right-column {
+  width: 70%; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between sections */
 }

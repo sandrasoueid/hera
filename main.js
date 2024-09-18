@@ -44,6 +44,7 @@ ipcMain.handle("get-data", async (event, dateKey) => {
     todos: Array.from({ length: 8 }, () => ({ text: "", completed: false })),
     meals: "",
     waterIntake: Array(8).fill(false),
+    notes: "",
   };
 
   console.log(`ipcMain: Returning data for ${dateKey}:`, dateData);
