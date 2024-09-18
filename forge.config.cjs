@@ -11,7 +11,9 @@ module.exports = {
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
-      config: {},
+      config: {
+        "name": "hera",
+      },
     },
     {
       name: "@electron-forge/maker-zip",
