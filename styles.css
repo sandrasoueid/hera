@@ -236,15 +236,19 @@ body {
 
 .water-intake .water-checkboxes {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  flex-wrap: wrap;     /* Allow checkboxes to wrap to next line */
+  gap: 10px;           /* Space between checkboxes */
+  justify-content: center; /* Center the checkboxes in the container */
 }
 
 .water-intake .water-checkboxes label {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-basis: calc(25% - 10px); /* Four checkboxes per row */
+  margin-bottom: 10px; /* Space below each row */
 }
 
 .water-intake .water-checkboxes input[type="checkbox"] {
-  margin-right: 10px;
+  margin-right: 5px; /* Space between checkbox and label text */
 }

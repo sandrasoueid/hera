@@ -58,12 +58,44 @@ async function createPlanner(selectedDate) {
   const fragment = createPlannerUI(dailyTasks, dateKey, today);
   planner.appendChild(fragment);
 
-
   loadGoals(dailyGoals, dateKey);
   loadTodos(dailyTodos, dateKey);
+  loadMeals(dailyMeals, dateKey);
+  loadWaterIntake(dailyWaterIntake, dateKey);
 
   // Pre-fetch data for previous and next dates
   prefetchAdjacentDates(dateKey);
+}
+
+function loadMeals(dailyMeals, dateKey) {
+  const mealsInput = document.getElementById("meals");
+  mealsInput.value = dailyMeals || "";
+
+  mealsInput.oninput = () => {
+    dailyCache[dateKey].meals = mealsInput.value;
+    window.api.saveData(dateKey, dailyCache[dateKey]);
+  };
+}
+
+function loadWaterIntake(dailyWaterIntake, dateKey, dailyData) {
+  const waterCheckboxesContainer = document.getElementById("waterCheckboxes");
+  waterCheckboxesContainer.innerHTML = "";
+
+  for (let i = 0; i < 8; i++) {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = dailyWaterIntake[i];
+
+    checkbox.onchange = () => {
+      dailyWaterIntake[i] = checkbox.checked;
+      dailyCache[dateKey].waterIntake = dailyWaterIntake;
+      window.api.saveData(dateKey, dailyCache[dateKey]);
+    };
+
+    label.appendChild(checkbox);
+    waterCheckboxesContainer.appendChild(label);
+  }
 }
 
 function loadGoals(dailyGoals, dateKey) {
