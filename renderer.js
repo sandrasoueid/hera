@@ -55,7 +55,7 @@ async function createPlanner(selectedDate) {
   } = dailyData;
 
   // Build the UI for the planner
-  const fragment = createPlannerUI(dailyTasks, dateKey);
+  const fragment = createPlannerUI(dailyTasks, dateKey, today);
   planner.appendChild(fragment);
 
   // Load the top 3 goals
@@ -86,10 +86,9 @@ function loadGoals(dailyGoals, dateKey) {
   });
 }
 
-function createPlannerUI(dailyTasks, dateKey) {
+function createPlannerUI(dailyTasks, dateKey, todayKey) {
   const fragment = document.createDocumentFragment();
   const currentHour = new Date().getHours();
-  const todayKey = new Date().toISOString().split("T")[0];
 
   for (let hour = 6; hour < 23; hour++) {
     const hourBlock = document.createElement("div");
