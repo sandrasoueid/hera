@@ -55,6 +55,18 @@ module.exports = {
     },
   ],
   buildIdentifier: "hera-build",
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'sandrasoueid',
+          name: 'hera'
+        },
+        prerelease: true
+      }
+    }
+  ],
   plugins: [
     {
       name: "@electron-forge/plugin-auto-unpack-natives",
