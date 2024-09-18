@@ -234,22 +234,23 @@ function createTodoItem(index, dailyTodos, dateKey, dailyData) {
   const textInput = document.createElement("input");
   textInput.type = "text";
   textInput.value = dailyTodos[index].text;
-  textInput.placeholder = `Todo Item ${index + 1}`;
 
   // Event Listeners
   checkbox.onchange = () => {
     dailyTodos[index].completed = checkbox.checked;
+    dailyCache[dateKey].todos = dailyTodos;
     if (checkbox.checked) {
       todoItemDiv.classList.add("completed");
     } else {
       todoItemDiv.classList.remove("completed");
     }
-    saveData(dateKey, dailyData);
+    window.api.saveData(dateKey, dailyCache[dateKey]);
   };
 
   textInput.oninput = () => {
     dailyTodos[index].text = textInput.value;
-    saveData(dateKey, dailyData);
+    dailyCache[dateKey].todos = dailyTodos;
+    window.api.saveData(dateKey, dailyCache[dateKey]);
   };
 
   todoItemDiv.appendChild(checkbox);
