@@ -5,13 +5,13 @@
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@electron/packager": "^18.3.5",
     "electron": "^32.1.0"
   }
 }
