@@ -1,5 +1,6 @@
 const { FusesPlugin } = require("@electron-forge/plugin-fuses");
 const { FuseV1Options, FuseVersion } = require("@electron/fuses");
+const path = require('path');
 
 module.exports = {
   packagerConfig: {
@@ -22,11 +23,13 @@ module.exports = {
     {
       "name": "@electron-forge/maker-wix",
       "config": {
+        "manufacturer": "Sandra Soueid",
+        "icon": path.resolve(__dirname, 'assets', 'icon.ico'),
         "ui": {
           "chooseDirectory": true,
           "images": {
-            "background": "./assets/background-493x312.bmp",
-            "banner": "./assets/banner-493x58.bmp"
+            "background": path.resolve(__dirname, 'assets', 'background-493x312.bmp'),
+            "banner": path.resolve(__dirname, 'assets', 'banner-493x58.bmp')
           }
         }
       }

@@ -7,12 +7,14 @@ import { fileURLToPath } from "url";
 // Fix __dirname and __filename in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const userDataPath = app.getPath('userData');
 
 import { JSONFilePreset } from "lowdb/node";
 
 // LowDB setup
 const defaultData = { dates: {} };
-const db = await JSONFilePreset(path.join(__dirname, "db.json"), defaultData);
+const db = await JSONFilePreset(path.join(userDataPath, "db.json"), defaultData);
+console.log(path.join(__dirname, "db.json"))
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
