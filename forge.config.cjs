@@ -5,7 +5,7 @@ module.exports = {
   packagerConfig: {
     asar: true,
     executableName: "hera",
-    icon: "./assets/icon",
+    icon: "./assets/icon.ico",
   },
   rebuildConfig: {},
   makers: [
@@ -13,7 +13,23 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       config: {
         "name": "hera",
+        "authors": "Sandra Soueid",
+        "description": "A daily, hourly planner.",
+        "setupIcon": "./assets/icon.ico",
+        "setupExe": "hera-setup.exe"
       },
+    },
+    {
+      "name": "@electron-forge/maker-wix",
+      "config": {
+        "ui": {
+          "chooseDirectory": true,
+          "images": {
+            "background": "./assets/background-493x312.bmp",
+            "banner": "./assets/banner-493x58.bmp"
+          }
+        }
+      }
     },
     {
       name: "@electron-forge/maker-zip",
