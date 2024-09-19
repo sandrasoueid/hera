@@ -1,0 +1,336 @@
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #00FF00;
+  border-radius: 4px;
+  animation: wiggle 0.5s infinite;
+}
+
+@keyframes wiggle { /*FRUIT SALAD : YUMMY YUMMY*/
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+
+  75% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes spin { /* SPIN TO WIN */
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .top3,
+  .todo-list,
+  .meals,
+  .water-intake,
+  .planner-container {
+    width: 100%;
+  }
+
+  .left-column,
+  .right-column {
+    width: 100%;
+  }
+
+  /* Reset justify-content */
+  .left-column,
+  .right-column {
+    justify-content: flex-start;
+  }
+}
+
+input[type="text"]:hover {
+  border-color: #888;
+}
+
+button:hover {
+  background-color: #FF0000;
+}
+
+/* Global box-sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Comic Sans", cursive;
+  margin: 0;
+  padding: 0;
+  background-color: #4a0404; /* OX BLOOD */
+  background: radial-gradient(#a400ff 0, #3b3b3b 10%, #d6d2d200 15%, #0b243a 50%, #d6d2d2 65%, #26483f 80%, #d6d2d200 95%),
+      repeating-linear-gradient(45deg, #a78b4178, #a548a07a 50px),
+      repeating-linear-gradient(135deg, #634610, #71b737 50px);
+}
+
+/* Container for the date picker and navigation buttons */
+.date-picker {
+  margin: 20px;
+  text-align: center;
+}
+
+.date-picker input[type="date"] {
+  font-size: 16px;
+  padding: 5px;
+  width: 200px;
+}
+
+.date-picker button {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 0 10px;
+}
+
+/* Main container to hold both columns */
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Center the content horizontally */
+  align-items: flex-start; /* Align items to the top */
+  margin: 0 auto;
+  max-width: 1300px; /* Set a max-width for the content */
+  gap: 40px; /* Space between the two columns */
+  padding: 20px;
+  animation: wiggle 2.1s infinite;
+}
+
+/* Left Column */
+.left-column {
+  width: 30%; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between sections */
+}
+
+/* Styles for the "Top 3 Goals" section */
+.top3 {
+  background-color: #947706; /* PUKE */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* NOT SO SUBTLE SAHDOW */
+}
+
+.top3 h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.top3 .goal {
+  margin-bottom: 15px;
+}
+
+.top3 .goal textarea {
+  width: 100%;
+  height: 100px; /* Adjust the height as needed */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #4ea809; /* BUILD THE WALL */
+  border-radius: 4px; /* Rounded corners */
+  resize: none; /* Prevent resizing */
+  overflow: auto; /* Enable scroll if text overflows */
+  font-family: inherit; /* Use the same font as the rest of the app */
+  line-height: 1.5; /* Optional: Improve text readability */
+  animation: spin 10s infinite;
+}
+
+/* Styles for the planner section */
+.planner-container {
+  width: 100%;
+  background-color: #b7410e; /* RUST (it's memory safe :)))) */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.4); /* YOU'RE NOT EVEN GOOD ENOUGH TO BE MY FAKE */
+}
+
+.planner-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.planner {
+  display: flex;
+  flex-direction: column;
+}
+
+.hour-block {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.hour-label {
+  width: 60px;
+  font-weight: bold;
+}
+
+.hour-input {
+  flex: 1;
+  padding: 5px;
+  font-size: 16px;
+  border: 2px solid #32cd32; /* GET EM UP AGAINST THE WALL */
+  border-radius: 4px; /* Rounded corners */
+}
+
+/* Highlight for the current hour */
+.hour-block.current-hour {
+  background-color: #ffeb3b; /* Highlight color */
+}
+
+/* Todo List Section */
+.todo-list {
+  background-color: #93934a; /* TO DONE LIST */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 23px 45px rgba(0, 0, 0, 0.5); /* BLACK HEARTED EVIL; BRAVE HEARTED HERO */
+}
+
+.todo-list h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.todo-list .todo-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.todo-list .todo-item input[type="checkbox"] {
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.todo-list .todo-item input[type="text"] {
+  flex: 1;
+  min-width: 0; /* Allow the input to shrink */
+  padding: 5px;
+  font-size: 16px;
+  border: 4px solid #e1ad01;
+  border-radius: 4px;
+}
+
+.todo-list .todo-item.completed input[type="text"] {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* Meals Section */
+.meals {
+  background-color: #00cdcd; /* PROTOSS CYAN BC I EAT EM FOR LUNCH */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 26px 47px rgba(0, 0, 0, 0.6); /* UGH... MARIA */
+}
+
+.meals h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.meals textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.5;
+  animation: spin 4.9s infinite;
+}
+
+/* Water Intake Section */
+.water-intake {
+  background-color: #008080; /* HYDRATE OR DIEDRATE */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7); /* I'M THE COOLEST */
+}
+
+.water-intake h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.water-intake .water-checkboxes {
+  display: flex;
+  flex-wrap: wrap;     /* Allow checkboxes to wrap to next line */
+  gap: 10px;           /* Space between checkboxes */
+  justify-content: center; /* Center the checkboxes in the container */
+}
+
+.water-intake .water-checkboxes label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: calc(25% - 10px); /* Four checkboxes per row */
+  margin-bottom: 10px; /* Space below each row */
+}
+
+.water-intake .water-checkboxes input[type="checkbox"] {
+  margin-right: 5px; /* Space between checkbox and label text */
+}
+
+/* Notes Section */
+.notes {
+  background-color: #4a412a; /* Pantone 448 C */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.8); /* CHAOS.... CONTROL ! */
+  flex-shrink: 0;
+}
+
+.notes h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.notes textarea {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Right Column */
+.right-column {
+  width: 70%; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between sections */
+}
