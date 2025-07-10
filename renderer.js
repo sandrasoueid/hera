@@ -125,14 +125,24 @@ function loadGoals(dailyGoals, dateKey) {
   ];
 
   goalInputs.forEach((input, index) => {
+    // populate from cache
     input.value = dailyGoals[index] || "";
 
-    // Replace any existing event listener with a new one
-    input.oninput = () => {
-      dailyGoals[index] = input.value;
+    const updateAndStyle = () => {
+      const v = input.value;
+      // save
+      dailyGoals[index] = v;
       dailyCache[dateKey].goals = dailyGoals;
       window.api.saveData(dateKey, dailyCache[dateKey]);
+      // toggle green highlight
+      input.classList.toggle("ok", v.includes("[OK]"));
+      input.classList.toggle("in-progress", v.includes("[IN PROGRESS]"));
     };
+
+    // wire the input
+    input.oninput = updateAndStyle;
+    // run once on load in case the saved text already had [OK]
+    updateAndStyle();
   });
 }
 
@@ -166,11 +176,24 @@ function createPlannerUI(dailyTasks, dateKey, todayKey) {
     hourInput.placeholder = "";
     hourInput.value = dailyTasks[hour] || "";
 
+    // helper to toggle orange if value includes `
+    const styleHighlight = () => {
+      hourInput.classList.toggle("orange", hourInput.value.includes("`"));
+      hourInput.classList.toggle("green", hourInput.value.includes("!"));
+      hourInput.classList.toggle("yellow", hourInput.value.includes("-"));
+      hourInput.classList.toggle("blue", hourInput.value.includes(","));
+      hourInput.classList.toggle("pink", hourInput.value.includes("."));
+    };
+
     hourInput.oninput = () => {
       dailyTasks[hour] = hourInput.value;
       dailyCache[dateKey].tasks = dailyTasks;
       window.api.saveData(dateKey, dailyCache[dateKey]);
+
+      styleHighlight();
     };
+
+    styleHighlight();
 
     hourBlock.appendChild(hourLabel);
     hourBlock.appendChild(hourInput);

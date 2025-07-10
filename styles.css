@@ -122,6 +122,16 @@ body {
   line-height: 1.5; /* Optional: Improve text readability */
 }
 
+/* new “[OK]” highlight */
+.top3 .goal textarea.ok {
+  background-color: #e0ffe0;
+}
+
+/* new IN PROGRESS rule */
+.top3 .goal textarea.in-progress {
+  background-color: #fff8b0;   /* light yellow */
+}
+
 /* Styles for the planner section */
 .planner-container {
   width: 100%;
@@ -159,6 +169,23 @@ body {
   font-size: 16px;
   border: 1px solid #ccc; /* Add a border */
   border-radius: 4px; /* Rounded corners */
+}
+
+/* planner inputs that contain a backtick get an orange fill */
+.planner .hour-input.orange {
+  background-color: #ffe0b0;  /* light orange */
+}
+.planner .hour-input.green {
+  background-color: #e0ffe0;  /* pale green */
+}
+.planner .hour-input.yellow {
+  background-color: #fff8b0;  /* pale yellow */
+}
+.planner .hour-input.blue {
+  background-color: #e0f8ff;  /* pale blue */
+}
+.planner .hour-input.pink {
+  background-color: #ffe0f8;  /* pale pink */
 }
 
 /* Highlight for the current hour */
