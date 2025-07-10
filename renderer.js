@@ -60,6 +60,12 @@ async function createPlanner(selectedDate) {
   const fragment = createPlannerUI(dailyTasks, dateKey, today);
   planner.appendChild(fragment);
 
+  // immediately highlight
+  updateHourHighlight(today);
+  // then every minute check again
+  if (window._hourTimer) clearInterval(window._hourTimer);
+  window._hourTimer = setInterval(() => updateHourHighlight(today), 60_000);
+
   loadGoals(dailyGoals, dateKey);
   loadTodos(dailyTodos, dateKey);
   loadMeals(dailyMeals, dateKey);
@@ -130,6 +136,18 @@ function loadGoals(dailyGoals, dateKey) {
   });
 }
 
+function updateHourHighlight(todayKey) {
+  const hourBlocks = document.querySelectorAll(".hour-block");
+  const currentHour = new Date().getHours();
+  const selectedDate = document.getElementById("datePicker").value;
+  if (selectedDate !== todayKey) return; // only highlight on “today”
+
+  hourBlocks.forEach((block, i) => {
+    const hour = 6 + i; // your blocks run 6…22
+    block.classList.toggle("current-hour", hour === currentHour);
+  });
+}
+
 function createPlannerUI(dailyTasks, dateKey, todayKey) {
   const fragment = document.createDocumentFragment();
   const currentHour = new Date().getHours();
@@ -147,13 +165,6 @@ function createPlannerUI(dailyTasks, dateKey, todayKey) {
     hourInput.type = "text";
     hourInput.placeholder = "";
     hourInput.value = dailyTasks[hour] || "";
-
-    // Highlight current hour if the selected date is today
-    if (dateKey === todayKey && hour === currentHour) {
-      hourBlock.classList.add("current-hour");
-    } else {
-      hourBlock.classList.remove("current-hour");
-    }
 
     hourInput.oninput = () => {
       dailyTasks[hour] = hourInput.value;
