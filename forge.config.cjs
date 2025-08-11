@@ -17,22 +17,8 @@ module.exports = {
         "authors": "Sandra Soueid",
         "description": "A daily, hourly planner.",
         "setupIcon": "./assets/icon.ico",
-        "setupExe": "hera-setup.exe"
+        "setupExe": "hera.exe"
       },
-    },
-    {
-      "name": "@electron-forge/maker-wix",
-      "config": {
-        "manufacturer": "Sandra Soueid",
-        "icon": path.resolve(__dirname, 'assets', 'icon.ico'),
-        "ui": {
-          "chooseDirectory": true,
-          "images": {
-            "background": path.resolve(__dirname, 'assets', 'background-493x312.bmp'),
-            "banner": path.resolve(__dirname, 'assets', 'banner-493x58.bmp')
-          }
-        }
-      }
     },
     {
       name: "@electron-forge/maker-zip",
